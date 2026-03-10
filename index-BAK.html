@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QXO Generation</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="ASSET/image/logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="ASSET/image/logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Readex+Pro:wght@200..700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(to bottom, #2E104E 23%, #130725 85%);
+            background-size: 100% 200%;
+            animation: gradientMove 12s ease infinite;
+            min-height: 100vh;
+            font-family: 'Readex Pro', sans-serif;
+            position: relative;
+            z-index: 0;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 0% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        /* Hover Effect Umum */
+        .pop-card {
+            transition: all 0.3s ease-out;
+        }
+        .pop-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Hover Effect Mewah Khusus Kartu Nama */
+        .hover-kartu {
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+        .hover-kartu:hover {
+            transform: translateY(-8px) scale(1.06);
+            box-shadow: 0 15px 35px rgba(199, 146, 252, 0.4);
+            border-color: #A555F6;
+        }
+
+        #tsparticles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body class="text-white">
+    <audio id="bg-music" loop>
+        <source src="ASSET/audio/lagu-kamu.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="welcome-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm hidden transition-opacity duration-300">
+        <div class="bg-[#2E104E] p-6 rounded-2xl text-center border border-[#A555F6] shadow-[0_0_20px_rgba(165,85,246,0.5)] max-w-[90%] w-80" data-aos="zoom-in">
+            <h2 class="text-xl font-bold text-white mb-2" style="font-family: 'Orbitron', sans-serif;">BEST EXPERIENCE</h2>
+            <p class="text-sm text-gray-300 mb-6">Nyalakan musik latar untuk pengalaman terbaik?</p>
+            <div class="flex gap-4 justify-center">
+                <button id="btn-decline" class="px-4 py-2 rounded-lg bg-gray-600 text-white font-semibold hover:bg-gray-500 transition">Nanti Saja</button>
+                <button id="btn-accept" class="px-4 py-2 rounded-lg bg-gradient-to-r from-[#C792FC] to-[#8C5BF4] text-white font-semibold hover:scale-105 transition shadow-lg shadow-purple-500/50">Nyalakan</button>
+            </div>
+        </div>
+    </div>
+
+    <button id="audio-toggle" class="fixed bottom-6 right-6 z-50 w-12 h-12 bg-gradient-to-r from-[#C792FC] to-[#8C5BF4] rounded-full flex items-center justify-center text-white shadow-[0_0_15px_rgba(199,146,252,0.6)] hover:scale-110 transition-transform duration-300 hidden">
+        <i id="audio-icon" class="fas fa-volume-up text-lg"></i>
+    </button>
+
+    <div id="tsparticles"></div>
+
+    <div class="max-w-md mx-auto px-4 py-6 space-y-12">
+
+        <section class="text-center space-y-6">
+            <h1 class="text-2xl md:text-3xl font-bold tracking-wide text-transparent bg-clip-text"
+                style="font-family: 'Orbitron', sans-serif; background-image: linear-gradient(to right, #C792FC, #A555F6, #8C5BF4);"
+                data-aos="fade-down" data-aos-duration="1200">
+                WELCOME TO QXO GENERATIO
+            </h1>
+
+            <div class="bg-white/10 px-3 py-5 rounded-xl text-center pop-card border border-[#49256C]"
+                data-aos="zoom-in-up" data-aos-delay="200">
+                <p class="text-xs text-white leading-relaxed">
+                    QXO Generatio adalah Family game Hotel Hideaway yang di ketuai oleh Quotehh dan Odette untuk menambah koneksi dan pertemanan.
+                </p>
+            </div>
+
+            <div class="flex gap-4 items-center justify-center">
+                <img src="ASSET/image/image 3.png" class="rounded-xl shadow-lg border border-white/10" width="213px" height="120px" data-aos="fade-right" data-aos-delay="400">
+                <img src="ASSET/image/logo.png" class="rounded-full shadow-lg border-2 border-[#A555F6]" width="116px" height="116px" data-aos="fade-left" data-aos-delay="500">
+            </div>
+        </section>
+
+        <section class="space-y-6">
+            <h2 class="text-center font-semibold text-lg" data-aos="fade-up">
+                Founder dan Admin-Admin QXO
+            </h2>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="fade-up" data-aos-delay="100">
+                    <img src="ASSET/image/image 4.png" class="w-16 h-16 mx-auto rounded-full mb-2">
+                    <p class="text-sm font-semibold">Qyu</p>
+                    <p class="text-xs opacity-70">(Founder - QXO)</p>
+                </div>
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="fade-up" data-aos-delay="200">
+                    <img src="ASSET/image/image 5.png" class="w-16 h-16 mx-auto rounded-full mb-2">
+                    <p class="text-sm font-semibold">Odet</p>
+                    <p class="text-xs opacity-70">(CO Founder - QXO)</p>
+                </div>
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="fade-up" data-aos-delay="100">
+                    <img src="ASSET/image/image 7.png" class="w-16 h-16 mx-auto rounded-full mb-2">
+                    <p class="text-sm font-semibold">Aen</p>
+                    <p class="text-xs opacity-70">(Admin - QXO)</p>
+                </div>
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="fade-up" data-aos-delay="200">
+                    <img src="ASSET/image/image 8.png" class="w-16 h-16 mx-auto rounded-full mb-2">
+                    <p class="text-sm font-semibold">Uci</p>
+                    <p class="text-xs opacity-70">(Admin - QXO)</p>
+                </div>
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="fade-up" data-aos-delay="100">
+                    <img src="ASSET/image/image 9.png" class="w-16 h-16 mx-auto rounded-full mb-2">
+                    <p class="text-sm font-semibold">Cya</p>
+                    <p class="text-xs opacity-70">(Admin - QXO)</p>
+                </div>
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="fade-up" data-aos-delay="200">
+                    <img src="ASSET/image/image 10.png" class="w-16 h-16 mx-auto rounded-full mb-2">
+                    <p class="text-sm font-semibold">Dhea</p>
+                    <p class="text-xs opacity-70">(Admin - QXO)</p>
+                </div>
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="fade-up" data-aos-delay="100">
+                    <img src="ASSET/image/image 12.png" class="w-16 h-16 mx-auto rounded-full mb-2">
+                    <p class="text-sm font-semibold">Bayo</p>
+                    <p class="text-xs opacity-70">(Admin - QXO)</p>
+                </div>
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="fade-up" data-aos-delay="200">
+                    <img src="ASSET/image/image 11.png" class="w-16 h-16 mx-auto rounded-full mb-2">
+                    <p class="text-sm font-semibold">Dex</p>
+                    <p class="text-xs opacity-70">(Admin - QXO)</p>
+                </div>
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="fade-up" data-aos-delay="100">
+                    <img src="ASSET/image/image-ava-2.png" class="w-16 h-16 mx-auto rounded-full mb-2">
+                    <p class="text-sm font-semibold">Diya</p>
+                    <p class="text-xs opacity-70">(Admin - QXO)</p>
+                </div>
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="fade-up" data-aos-delay="200">
+                    <img src="ASSET/image/image-ava-1.png" class="w-16 h-16 mx-auto rounded-full mb-2">
+                    <p class="text-sm font-semibold">Neko</p>
+                    <p class="text-xs opacity-70">(Admin - QXO)</p>
+                </div>
+            </div>
+
+            <div class="bg-white/10 p-4 rounded-xl text-center pop-card border border-[#49256C]" data-aos="zoom-in" data-aos-offset="100">
+                <h2 class="text-center font-semibold mb-2">100+ Orang telah bergabung ke QXO</h2>
+                <p class="text-center text-sm opacity-80">Mau tahu lebih lanjut QXO seperti apa?</p>
+                <p class="text-center text-sm font-semibold mt-1 animate-bounce">Yuk Scroll Kebawah ↓↓</p>
+            </div>
+        </section>
+
+        <section class="flex flex-col items-center py-6">
+            <h2 class="text-center font-bold pb-8" style="font-size: 32px;" data-aos="fade-up">
+                FOTO BERSAMA
+            </h2>
+
+            <img src="ASSET/image/image 13.png" class="rounded-xl shadow-lg border border-white/10" width="291px" height="143px" data-aos="fade-right">
+            <div class="w-1 h-10 bg-gradient-to-b from-[#A555F6] to-transparent my-1" data-aos="zoom-in" data-aos-delay="100"></div>
+            
+            <img src="ASSET/image/image 14.png" class="rounded-xl shadow-lg border border-white/10" width="291px" height="143px" data-aos="fade-left">
+            <div class="w-1 h-10 bg-gradient-to-b from-[#A555F6] to-transparent my-1" data-aos="zoom-in" data-aos-delay="100"></div>
+            
+            <img src="ASSET/image/image 15.png" class="rounded-xl shadow-lg border border-white/10" width="291px" height="143px" data-aos="fade-right">
+            <div class="w-1 h-10 bg-gradient-to-b from-[#A555F6] to-transparent my-1" data-aos="zoom-in" data-aos-delay="100"></div>
+            
+            <img src="ASSET/image/image 16.png" class="rounded-xl shadow-lg border border-white/10" width="291px" height="143px" data-aos="fade-left">
+            <div class="w-1 h-10 bg-gradient-to-b from-[#A555F6] to-transparent my-1" data-aos="zoom-in" data-aos-delay="100"></div>
+            
+            <img src="ASSET/image/image 17.png" class="rounded-xl shadow-lg border border-white/10" width="291px" height="143px" data-aos="fade-up">
+        </section>
+
+        <section class="space-y-4" data-aos="fade-up">
+            <div class="bg-white/10 backdrop-blur-md rounded-xl px-1 border border-[#49256C] overflow-hidden">
+                <div class="border-b-4 border-white/10 p-4 bg-black/20">
+                    <h2 class="text-center font-semibold text-white">🗣️ : Benefit yang ga didapetin di SQ/</h2>
+                    <h2 class="text-center font-semibold text-white">Family lain apasih selain di QXO?</h2>
+                </div>
+                <div class="border-b-4 border-white/10 p-3">
+                    <h1 class="text-center font-bold text-[#C792FC] tracking-widest" style="font-size: 16pt;">
+                        ( KARTU NAMA RESMI )
+                    </h1>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 justify-items-center py-6 px-2 border-b-4 border-white/10" id="image-container">
+                    </div>
+
+                <div class="p-4 space-y-4 bg-black/10">
+                    <h2 class="text-center text-[#C792FC] font-bold text-xl py-2" data-aos="fade-up">Keren banget kannn 🤩</h2>
+                    <p class="text-sm opacity-90" data-aos="fade-up">Ada beberapa syarat dan perjanjian yang perlu di ikuti untuk mendapat kartu itu :</p>
+                    
+                    <h2 class="text-lg font-bold text-white border-l-4 border-[#C792FC] pl-2" data-aos="fade-right">Persyaratan</h2>
+                    <ul class="text-sm space-y-2 pl-2 opacity-80" data-aos="fade-up">
+                        <li>• Wajib punya avatar hh yang ciri khas/permanent</li>
+                        <li>• Wajib join menjadi bagian keluarga QXO di komunitas whatsapp</li>
+                        <li>• Sudah kirim intro di komunitas, wajib punya tiktok & instagram</li>
+                        <li>• Sudah pernah join live tiktok @quotehh beberapa kali</li>
+                        <li>• Sudah join komunitas QXO selama 1 Minggu di whatsapp</li>
+                        <li>• Sudah tau akun tiktok & instagramnya QXO</li>
+                        <li>• Berumur 15+</li>
+                        <li>• Sudah add QUOT3HH dan OUD3THH di hotel hideaway</li>
+                    </ul>
+
+                    <h2 class="text-lg font-bold text-white border-l-4 border-[#C792FC] pl-2 mt-4" data-aos="fade-right">Perjanjian</h2>
+                    <ul class="text-sm space-y-2 pl-2 opacity-80" data-aos="fade-up">
+                        <li>• Jangan susah dihubungi, wajib kasih laporan ke admin jika sibuk.</li>
+                        <li>• Menjaga nama baik komunitas, jangan mancing keributan.</li>
+                        <li>• Wajib lapor klo ada masalah sesama keluarga QXO.</li>
+                        <li>• Harus utamakan kejujuran.</li>
+                        <li>• Respect dan saling menghargai kawan yg belum resmi.</li>
+                        <li>• Jangan bawa masalah / berbuat masalah kedalam QXO.</li>
+                        <li>• Berusaha bijak & smart, jaga sikap!</li>
+                    </ul>
+
+                    <h2 class="text-lg font-bold text-white border-l-4 border-[#C792FC] pl-2 mt-4" data-aos="fade-right">Kegunaan</h2>
+                    <ul class="text-sm space-y-2 pl-2 opacity-80 pb-4" data-aos="fade-up">
+                        <li>• Bisa join acara fotbar quotehh & oudethh</li>
+                        <li>• Bisa direpost dan di tag langsung sama QXO</li>
+                        <li>• Bisa lebih dikenal oleh member-member lain</li>
+                        <li>• Bisa punya peluang buat jadi admin QXO</li>
+                        <li>• Bisa join acara spesial berhadiah dll...</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-6">
+            <div class="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-[#49256C]" data-aos="flip-up">
+                <h2 class="text-center text-white font-bold text-xl pb-4">Syarat & Peraturan Join QXO</h2>
+                <ul class="text-sm space-y-2 opacity-90">
+                    <li>✔️ 15+ only | Fun & Respect</li>
+                    <li>✔️ Hormati semua member, no bully and no hate</li>
+                    <li>✔️ Public clean, no NSFW dan no sex talk</li>
+                    <li>✔️ Pasang code dan hashtag grup di bio</li>
+                    <li>✔️ Privasi aman dan no share data pribadi</li>
+                    <li>✔️ Bantu newbie, jangan ngejek</li>
+                    <li>✔️ Ikuti rules grup & No spam / drama / caper</li>
+                </ul>
+
+                <div class="mt-6 p-4 bg-red-500/20 border border-red-500/50 rounded-lg" data-aos="zoom-in" data-aos-delay="200">
+                    <h2 class="text-white text-lg font-bold mb-2">⚠ BUAT MASALAH?</h2>
+                    <ul class="text-md font-semibold space-y-1 text-red-200">
+                        <li>1x → Warning!</li>
+                        <li>2x → KICK!</li>
+                    </ul>
+                </div>
+
+                <div class="text-center mt-6" data-aos="fade-up" data-aos-delay="300">
+                    <h2 class="text-white text-2xl font-black tracking-widest text-[#C792FC]">BTTB</h2>
+                    <h2 class="text-white text-sm font-semibold opacity-80">(Bebas Tapi Tau Batas)</h2>
+                    <h2 class="text-white text-md mt-2 font-bold italic">"Junjung tinggi solidaritas!"</h2>
+                </div>
+            </div>
+        </section>
+
+        <section class="space-y-6 text-center text-white pt-4 pb-10">
+            <p class="text-md opacity-90" data-aos="fade-up">Buat yang mau join langsung chat ke Whatsapp:</p>
+            <div class="flex justify-center gap-8">
+                <a href="https://wa.me/6281311851025" target="_blank" class="flex flex-col items-center hover:scale-110 transition duration-300" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="bg-green-500 p-3 rounded-full shadow-lg shadow-green-500/30 mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                    </div>
+                    <span class="font-bold text-[13px]">Quotehh</span>
+                </a>
+
+                <a href="https://wa.me/6282323893740" target="_blank" class="flex flex-col items-center hover:scale-110 transition duration-300" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="bg-green-500 p-3 rounded-full shadow-lg shadow-green-500/30 mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                    </div>
+                    <span class="font-bold text-[13px]">Odette</span>
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="text-center text-xs pb-8 opacity-60 space-y-1" data-aos="fade-up">
+        <p class="tracking-widest font-bold">QXOGENERATIO!</p>
+        <p>&copy; <span id="year"></span> <span class="font-semibold text-[#C792FC]">Rapih Digital System</span>. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+        
+        const container = document.getElementById("image-container");
+        let delayCount = 0;
+        for (let i = 18; i <= 27; i++) {
+            const img = document.createElement("img");
+            img.src = `ASSET/image/image ${i}.png`;
+            img.className = "rounded-xl shadow-lg hover-kartu"; 
+            img.setAttribute("data-aos", "zoom-in-up");
+            img.setAttribute("data-aos-delay", delayCount.toString());
+            delayCount += 150; 
+            if (delayCount > 300) delayCount = 0;
+            img.style.width = "138px";
+            img.style.height = "92px";
+            container.appendChild(img);
+        }
+    </script>
+    
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+    </script>
+
+    <script>
+        const audio = document.getElementById('bg-music');
+        const modal = document.getElementById('welcome-modal');
+        const btnAccept = document.getElementById('btn-accept');
+        const btnDecline = document.getElementById('btn-decline');
+        const audioBtn = document.getElementById('audio-toggle');
+        const audioIcon = document.getElementById('audio-icon');
+
+        // Mengurangi volume agar tidak kaget
+        audio.volume = 0.5;
+
+        // Cek Local Storage
+        const audioState = localStorage.getItem('qxo_audio_state');
+
+        function updateIcon(isPlaying) {
+            if (isPlaying) {
+                audioIcon.classList.remove('fa-volume-xmark');
+                audioIcon.classList.add('fa-volume-up');
+            } else {
+                audioIcon.classList.remove('fa-volume-up');
+                audioIcon.classList.add('fa-volume-xmark');
+            }
+        }
+
+        function playAudio() {
+            audio.play().then(() => {
+                updateIcon(true);
+            }).catch(error => {
+                console.log("Autoplay dicegah browser, butuh interaksi user.");
+                updateIcon(false);
+            });
+        }
+
+        // Logika saat pertama kali memuat web
+        if (!audioState) {
+            // Jika belum ada pilihan, tampilkan modal
+            modal.classList.remove('hidden');
+        } else {
+            // Jika sudah pernah memilih
+            audioBtn.classList.remove('hidden');
+            if (audioState === 'play') {
+                // Browser modern butuh klik walau ada di localstorage (aturan autoplay browser)
+                const playPromise = audio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        updateIcon(true);
+                    }).catch(() => {
+                        updateIcon(false);
+                        // Tunggu klik pertama user di mana saja untuk menyalakan audio
+                        document.body.addEventListener('click', function unlockAudio() {
+                            if (localStorage.getItem('qxo_audio_state') === 'play') {
+                                playAudio();
+                            }
+                            document.body.removeEventListener('click', unlockAudio);
+                        }, { once: true });
+                    });
+                }
+            } else {
+                updateIcon(false);
+            }
+        }
+
+        // User Klik Tombol di Modal
+        btnAccept.addEventListener('click', () => {
+            localStorage.setItem('qxo_audio_state', 'play');
+            modal.classList.add('opacity-0'); // Efek fade out
+            setTimeout(() => modal.classList.add('hidden'), 300);
+            audioBtn.classList.remove('hidden');
+            playAudio();
+        });
+
+        btnDecline.addEventListener('click', () => {
+            localStorage.setItem('qxo_audio_state', 'muted');
+            modal.classList.add('opacity-0');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+            audioBtn.classList.remove('hidden');
+            updateIcon(false);
+        });
+
+        // Toggle Audio pakai Tombol Floating
+        audioBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                localStorage.setItem('qxo_audio_state', 'play');
+                updateIcon(true);
+            } else {
+                audio.pause();
+                localStorage.setItem('qxo_audio_state', 'muted');
+                updateIcon(false);
+            }
+        });
+    </script>
+</body>
+
+</html>
