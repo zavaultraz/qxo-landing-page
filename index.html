@@ -12,10 +12,8 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="icon" type="image/png" sizes="32x32" href="ASSET/image/logo.png">
     <link rel="icon" type="image/png" sizes="16x16" href="ASSET/image/logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <!-- Perbaikan: Gunakan Font Awesome versi 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,6 +34,9 @@
             font-family: 'Readex Pro', sans-serif;
             position: relative;
             z-index: 0;
+            /* Perbaikan: Hindari overflow horizontal */
+            overflow-x: hidden;
+            width: 100%;
         }
 
         @keyframes gradientMove {
@@ -54,7 +55,6 @@
 
         }
 
-
         /* Card press effect */
         .pop-card {
             transition: all .25s ease;
@@ -67,6 +67,87 @@
 
         .pop-card:active {
             transform: scale(1.07);
+        }
+
+        /* Perbaikan: Container utama */
+        .main-container {
+            max-width: 28rem;
+            /* 448px - setara max-w-md */
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+
+        /* Perbaikan: Grid container untuk gambar kartu */
+        #image-container {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+            justify-items: center;
+            padding: 1rem;
+            width: 100%;
+        }
+
+        /* Perbaikan: Button volume tidak ketutupan */
+        #audio-toggle {
+            position: fixed;
+            bottom: 6rem;
+            /* Naikkan sedikit */
+            right: 1.5rem;
+            z-index: 50;
+            width: 3rem;
+            height: 3rem;
+            background: linear-gradient(to right, #C792FC, #8C5BF4);
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 0 15px rgba(199, 146, 252, 0.6);
+            transition: transform 0.3s;
+        }
+
+        #audio-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Perbaikan: Konten tidak overflow */
+        .grid-cols-2 {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+            width: 100%;
+        }
+
+        /* Perbaikan: Elemen dalam grid */
+        .grid-cols-2>div {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Perbaikan: Bagian kontak */
+        .flex.justify-center.pr-10 {
+            padding-right: 0 !important;
+            /* Hapus padding kanan berlebih */
+            gap: 1.5rem;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        .animate-gradient {
+            animation: gradientMove 4s linear infinite;
         }
     </style>
 
@@ -95,19 +176,20 @@
     </div>
 
     <button id="audio-toggle"
-        class="fixed bottom-6 right-6 z-50 w-12 h-12 bg-gradient-to-r from-[#C792FC] to-[#8C5BF4] rounded-full flex items-center justify-center text-white shadow-[0_0_15px_rgba(199,146,252,0.6)] hover:scale-110 transition-transform duration-300 hidden">
+        class="fixed bottom-24 right-6 z-50 w-12 h-12 bg-gradient-to-r from-[#C792FC] to-[#8C5BF4] rounded-full flex items-center justify-center text-white shadow-[0_0_15px_rgba(199,146,252,0.6)] hover:scale-110 transition-transform duration-300 hidden">
         <i id="audio-icon" class="fas fa-volume-up text-lg"></i>
     </button>
-    <div class="max-w-md mx-auto px-4 py-6 space-y-8">
+
+    <!-- Perbaikan: Container utama dengan class baru -->
+    <div class="main-container space-y-8">
 
         <section class="text-center space-y-4">
 
-            <h1 class="text-lg font-bold tracking-wide text-transparent bg-clip-text"
-                style="font-family: 'Orbitron', sans-serif; background-image: linear-gradient(to right, #C792FC, #A555F6, #8C5BF4);"
+            <h1 class="text-lg font-bold tracking-wide text-transparent bg-clip-text animate-gradient"
+                style="font-family: 'Orbitron', sans-serif; background-image: linear-gradient(to right, #C792FC, #A555F6, #8C5BF4, #C792FC); background-size: 200% auto;"
                 data-aos="fade-down">
                 WELCOME TO QXO GENERATIO
             </h1>
-
             <div class="bg-white/10 px-3 py-5 rounded-xl text-center pop-card border border-[#49256C]"
                 data-aos="fade-up" data-aos-duration="1000">
                 <p class="text-xs text-white">
@@ -136,71 +218,71 @@
 
             <div class="grid grid-cols-2 gap-4">
 
-                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="flip-left"
-                    data-aos-duration="600">
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]"
+                    data-aos="flip-left" data-aos-duration="600">
                     <img src="ASSET/image/image 4.png" class="w-16 h-16 mx-auto rounded-full mb-2">
                     <p class="text-sm font-semibold">Qyu</p>
                     <p class="text-xs opacity-70">(Founder - QXO)</p>
                 </div>
 
-                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="flip-left"
-                    data-aos-duration="600" data-aos-delay="100">
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]"
+                    data-aos="flip-left" data-aos-duration="600" data-aos-delay="100">
                     <img src="ASSET/image/image 5.png" class="w-16 h-16 mx-auto rounded-full mb-2">
                     <p class="text-sm font-semibold">Odet</p>
                     <p class="text-xs opacity-70">(CO Founder - QXO)</p>
                 </div>
 
-                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="flip-left"
-                    data-aos-duration="600" data-aos-delay="150">
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]"
+                    data-aos="flip-left" data-aos-duration="600" data-aos-delay="150">
                     <img src="ASSET/image/image 7.png" class="w-16 h-16 mx-auto rounded-full mb-2">
                     <p class="text-sm font-semibold">Aen</p>
                     <p class="text-xs opacity-70">(Admin - QXO)</p>
                 </div>
 
-                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="flip-left"
-                    data-aos-duration="600" data-aos-delay="200">
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]"
+                    data-aos="flip-left" data-aos-duration="600" data-aos-delay="200">
                     <img src="ASSET/image/image 8.png" class="w-16 h-16 mx-auto rounded-full mb-2">
                     <p class="text-sm font-semibold">Uci</p>
                     <p class="text-xs opacity-70">(Admin - QXO)</p>
                 </div>
 
-                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="flip-left"
-                    data-aos-duration="600" data-aos-delay="250">
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]"
+                    data-aos="flip-left" data-aos-duration="600" data-aos-delay="250">
                     <img src="ASSET/image/image 9.png" class="w-16 h-16 mx-auto rounded-full mb-2">
                     <p class="text-sm font-semibold">Cya</p>
                     <p class="text-xs opacity-70">(Admin - QXO)</p>
                 </div>
 
-                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="flip-left"
-                    data-aos-duration="600" data-aos-delay="300">
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]"
+                    data-aos="flip-left" data-aos-duration="600" data-aos-delay="300">
                     <img src="ASSET/image/image 10.png" class="w-16 h-16 mx-auto rounded-full mb-2">
                     <p class="text-sm font-semibold">Dhea</p>
                     <p class="text-xs opacity-70">(Admin - QXO)</p>
                 </div>
 
-                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="flip-left"
-                    data-aos-duration="600" data-aos-delay="350">
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]"
+                    data-aos="flip-left" data-aos-duration="600" data-aos-delay="350">
                     <img src="ASSET/image/image 12.png" class="w-16 h-16 mx-auto rounded-full mb-2">
                     <p class="text-sm font-semibold">Bayo</p>
                     <p class="text-xs opacity-70">(Admin - QXO)</p>
                 </div>
 
-                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="flip-left"
-                    data-aos-duration="600" data-aos-delay="400">
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]"
+                    data-aos="flip-left" data-aos-duration="600" data-aos-delay="400">
                     <img src="ASSET/image/image 11.png" class="w-16 h-16 mx-auto rounded-full mb-2">
                     <p class="text-sm font-semibold">Dex</p>
                     <p class="text-xs opacity-70">(Admin - QXO)</p>
                 </div>
 
-                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="flip-left"
-                    data-aos-duration="600" data-aos-delay="450">
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]"
+                    data-aos="flip-left" data-aos-duration="600" data-aos-delay="450">
                     <img src="ASSET/image/image-ava-2.png" class="w-16 h-16 mx-auto rounded-full mb-2">
                     <p class="text-sm font-semibold">Diya</p>
                     <p class="text-xs opacity-70">(Admin - QXO)</p>
                 </div>
 
-                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]" data-aos="flip-left"
-                    data-aos-duration="600" data-aos-delay="500">
+                <div class="bg-white/10 p-3 rounded-xl text-center pop-card border border-[#49256C]"
+                    data-aos="flip-left" data-aos-duration="600" data-aos-delay="500">
                     <img src="ASSET/image/image-ava-1.png" class="w-16 h-16 mx-auto rounded-full mb-2">
                     <p class="text-sm font-semibold">Neko</p>
                     <p class="text-xs opacity-70">(Admin - QXO)</p>
@@ -264,9 +346,7 @@
                     </h1>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4 justify-items-center py-4 border-b-4 border-white/10 p-12"
-                    id="image-container">
-                </div>
+                <div id="image-container"></div>
 
                 <script>
                     const container = document.getElementById("image-container");
@@ -280,6 +360,7 @@
                         img.setAttribute("data-aos-duration", "600");
                         img.style.width = "138px";
                         img.style.height = "92px";
+                        img.style.objectFit = "cover"; // Perbaikan: gambar tidak gepeng
                         container.appendChild(img);
                     }
                 </script>
@@ -294,36 +375,59 @@
                     Persyaratan
                 </h2>
                 <ul class="text-sm space-y-1 px-4">
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500">-Wajib punya avatar hh yang ciri khas/permanent</li>
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="50">-Wajib join menjadi bagian keluarga QXO di komunitas whatsapp</li>
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="100">-Sudah kirim intro di komunitas, wajib punya tiktok & instagram</li>
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="150">-Sudah pernah join live tiktok @quotehh beberapa kali</li>
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="200">-Sudah join komunitas QXO selama 1 Minggu di komunitas whatsapp</li>
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="250">-Sudah tau akun tiktok & instagramnya QXO</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500">-Wajib punya avatar hh yang ciri
+                        khas/permanent</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="50">-Wajib join menjadi
+                        bagian keluarga QXO di komunitas whatsapp</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="100">-Sudah kirim intro
+                        di komunitas, wajib punya tiktok & instagram</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="150">-Sudah pernah join
+                        live tiktok @quotehh beberapa kali</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="200">-Sudah join
+                        komunitas QXO selama 1 Minggu di komunitas whatsapp</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="250">-Sudah tau akun
+                        tiktok & instagramnya QXO</li>
                     <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">-Berumur 15+</li>
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="350">-Sudah add QUOT3HH dan OUD3THH di hotel hideaway</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="350">-Sudah add QUOT3HH
+                        dan OUD3THH di hotel hideaway</li>
                 </ul>
                 <h2 class="text-center text-white text-xl pt-4 pb-3" data-aos="fade-right">
                     Perjanjian
                 </h2>
                 <ul class="text-sm space-y-1 px-4">
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500">-Jangan susah dihubungi, klo ada acara atau kesibukan wajib kasih laporan ke admin, jangan tertutup dengan admin</li>
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="50">-Menjaga nama baik komunitas, jangan mancing keributan, wajib lapor klo mau ganti nama sosmed/karakter hh biar datanya bisa diperbarui secepatnya</li>
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="100">-Wajib lapor klo ada masalah sesama keluarga QXO, jangan diem, karna nanti kita bakal bantu, diusahain jangan ada masalah sesama keluarga kita</li>
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="150">-Harus utamakan kejujuran</li>
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="200">-Respect dan saling menghargai buat kawan yg belum resmi di QXO</li>
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="250">-Jangan bawa masalah atau berbuat masalah kedalam QXO, karna kita gabakal ikut campur dalam masalah apapun diluar game!</li>
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">-Berusaha bijak & smart dalam hal apapun, jaga sikap, dan jangan malu-maluin, kecuali sesama keluarga QXO bole bebas… tapi klo di luar jangan berlebihan yaa</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500">-Jangan susah dihubungi, klo ada acara
+                        atau kesibukan wajib kasih laporan ke admin, jangan tertutup dengan admin</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="50">-Menjaga nama baik
+                        komunitas, jangan mancing keributan, wajib lapor klo mau ganti nama sosmed/karakter hh biar
+                        datanya bisa diperbarui secepatnya</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="100">-Wajib lapor klo
+                        ada masalah sesama keluarga QXO, jangan diem, karna nanti kita bakal bantu, diusahain jangan ada
+                        masalah sesama keluarga kita</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="150">-Harus utamakan
+                        kejujuran</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="200">-Respect dan saling
+                        menghargai buat kawan yg belum resmi di QXO</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="250">-Jangan bawa
+                        masalah atau berbuat masalah kedalam QXO, karna kita gabakal ikut campur dalam masalah apapun
+                        diluar game!</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="300">-Berusaha bijak &
+                        smart dalam hal apapun, jaga sikap, dan jangan malu-maluin, kecuali sesama keluarga QXO bole
+                        bebas… tapi klo di luar jangan berlebihan yaa</li>
                 </ul>
                 <h2 class="text-center text-white text-xl pt-4 pb-3" data-aos="fade-right">
                     Kegunaan
                 </h2>
                 <ul class="text-sm space-y-1 px-4">
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500">-Bisa join acara fotbar quotehh & oudethh</li>
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="50">-Bisa direpost dan di tag langsung sama QXO/quotehh/oudethh</li>
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="100">-Bisa lebih dikenal oleh member-member lain</li>
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="150">-Bisa punya peluang buat jadi admin QXO</li>
-                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="200">-Bisa join acara spesial berhadiah dll…</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500">-Bisa join acara fotbar quotehh &
+                        oudethh</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="50">-Bisa direpost dan
+                        di tag langsung sama QXO/quotehh/oudethh</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="100">-Bisa lebih dikenal
+                        oleh member-member lain</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="150">-Bisa punya peluang
+                        buat jadi admin QXO</li>
+                    <li class="pb-4" data-aos="fade-up" data-aos-duration="500" data-aos-delay="200">-Bisa join acara
+                        spesial berhadiah dll…</li>
                 </ul>
             </div>
         </section>
@@ -338,13 +442,20 @@
                 </h2>
                 <ul class="text-sm space-y-1 px-4">
                     <li class="pb-1" data-aos="fade-up" data-aos-duration="400">-15+ only | Fun & Respect</li>
-                    <li class="pb-1" data-aos="fade-up" data-aos-duration="400" data-aos-delay="50">-Hormati semua member, no bully and no hate</li>
-                    <li class="pb-1" data-aos="fade-up" data-aos-duration="400" data-aos-delay="100">-Public clean, no NSFW dan no sex talk</li>
-                    <li class="pb-1" data-aos="fade-up" data-aos-duration="400" data-aos-delay="150">-Pasang code dan hashtag grup di bio</li>
-                    <li class="pb-1" data-aos="fade-up" data-aos-duration="400" data-aos-delay="200">-Privasi aman dan no share data pribadi</li>
-                    <li class="pb-1" data-aos="fade-up" data-aos-duration="400" data-aos-delay="250">-Bantu newbie, jangan ngejek</li>
-                    <li class="pb-1" data-aos="fade-up" data-aos-duration="400" data-aos-delay="300">-Ikuti rules grup</li>
-                    <li class="pb-1" data-aos="fade-up" data-aos-duration="400" data-aos-delay="350">-No spam / drama / caper</li>
+                    <li class="pb-1" data-aos="fade-up" data-aos-duration="400" data-aos-delay="50">-Hormati semua
+                        member, no bully and no hate</li>
+                    <li class="pb-1" data-aos="fade-up" data-aos-duration="400" data-aos-delay="100">-Public clean, no
+                        NSFW dan no sex talk</li>
+                    <li class="pb-1" data-aos="fade-up" data-aos-duration="400" data-aos-delay="150">-Pasang code dan
+                        hashtag grup di bio</li>
+                    <li class="pb-1" data-aos="fade-up" data-aos-duration="400" data-aos-delay="200">-Privasi aman dan
+                        no share data pribadi</li>
+                    <li class="pb-1" data-aos="fade-up" data-aos-duration="400" data-aos-delay="250">-Bantu newbie,
+                        jangan ngejek</li>
+                    <li class="pb-1" data-aos="fade-up" data-aos-duration="400" data-aos-delay="300">-Ikuti rules grup
+                    </li>
+                    <li class="pb-1" data-aos="fade-up" data-aos-duration="400" data-aos-delay="350">-No spam / drama /
+                        caper</li>
                 </ul>
 
                 <h2 class="text-left text-white text-lg pt-4 px-4" data-aos="fade-right">
@@ -366,16 +477,19 @@
                 </h2>
             </div>
         </section>
+
+        <!-- Perbaikan: Bagian kontak tanpa padding kanan berlebih -->
         <section class="space-y-6 text-center text-white">
 
             <p class="text-md" data-aos="fade-down">
                 Buat yang mau join langsung chat ke Whatsapp :
             </p>
 
-            <div class="flex justify-center pr-10 gap-6">
+            <div class="flex justify-center gap-6"> <!-- Hapus pr-10 -->
 
                 <a href="https://wa.me/6281311851025" target="_blank"
-                    class="flex flex-col items-center hover:scale-105 transition" data-aos="zoom-in" data-aos-duration="500">
+                    class="flex flex-col items-center hover:scale-105 transition" data-aos="zoom-in"
+                    data-aos-duration="500">
                     <div class="flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-500" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -388,7 +502,8 @@
                 </a>
 
                 <a href="https://wa.me/6282323893740" target="_blank"
-                    class="flex flex-col items-center hover:scale-105 transition" data-aos="zoom-in" data-aos-duration="500" data-aos-delay="100">
+                    class="flex flex-col items-center hover:scale-105 transition" data-aos="zoom-in"
+                    data-aos-duration="500" data-aos-delay="100">
                     <div class="flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-500" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -405,6 +520,7 @@
         </section>
 
     </div>
+
     <footer class="text-center text-xs pb-6 opacity-60 space-y-1" data-aos="fade-up" data-aos-duration="600">
         <p class="opacity-25">QXOGENERATIO!</p>
         <p>&copy; <span id="year"></span> <span class="font-semibold text-[#C792FC]">Rapih Digital System All Rights
@@ -424,6 +540,8 @@
             easing: 'ease-in-out',
         });
     </script>
+
+    <!-- Perbaikan: Script audio dengan Font Awesome 6 -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const audio = document.getElementById('bg-music');
@@ -439,7 +557,7 @@
             // Ambil status dari Local Storage
             let audioState = localStorage.getItem('qxo_audio_state');
 
-            // FUNGSI GANTI ICON
+            // FUNGSI GANTI ICON - Perbaikan untuk Font Awesome 6
             function updateIcon(isPlaying) {
                 if (isPlaying) {
                     audioIcon.classList.remove('fa-volume-xmark');
@@ -456,6 +574,7 @@
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
                         updateIcon(true);
+                        console.log("Audio playing, state saved:", localStorage.getItem('qxo_audio_state'));
                     }).catch(error => {
                         console.log("Browser mencegah autoplay. User harus klik manual.");
                         updateIcon(false);
@@ -467,6 +586,7 @@
             if (!audioState) {
                 // JIKA BELUM PERNAH MEMILIH -> TAMPILKAN MODAL
                 modal.classList.remove('hidden');
+                console.log("No audio state found, showing modal");
             } else {
                 // JIKA SUDAH PERNAH MEMILIH -> MUNCULKAN TOMBOL FLOATING
                 modal.classList.add('hidden');
@@ -477,16 +597,19 @@
                 } else {
                     updateIcon(false);
                 }
+                console.log("Audio state loaded:", audioState);
             }
 
             // KLIK "NYALAKAN" PADA MODAL
             btnAccept.addEventListener('click', () => {
                 localStorage.setItem('qxo_audio_state', 'play');
+                console.log("State set to: play");
 
                 // Animasi tutup modal
                 modal.classList.add('opacity-0');
                 setTimeout(() => {
                     modal.classList.add('hidden');
+                    modal.classList.remove('opacity-0');
                     audioBtn.classList.remove('hidden'); // Munculkan tombol melayang
                 }, 300);
 
@@ -496,11 +619,13 @@
             // KLIK "NANTI SAJA" PADA MODAL
             btnDecline.addEventListener('click', () => {
                 localStorage.setItem('qxo_audio_state', 'muted');
+                console.log("State set to: muted");
 
                 // Animasi tutup modal
                 modal.classList.add('opacity-0');
                 setTimeout(() => {
                     modal.classList.add('hidden');
+                    modal.classList.remove('opacity-0');
                     audioBtn.classList.remove('hidden'); // Munculkan tombol melayang
                 }, 300);
 
@@ -513,10 +638,19 @@
                     audio.play();
                     localStorage.setItem('qxo_audio_state', 'play');
                     updateIcon(true);
+                    console.log("Button clicked: play, state saved:", localStorage.getItem('qxo_audio_state'));
                 } else {
                     audio.pause();
                     localStorage.setItem('qxo_audio_state', 'muted');
                     updateIcon(false);
+                    console.log("Button clicked: pause, state saved:", localStorage.getItem('qxo_audio_state'));
+                }
+            });
+
+            // Verifikasi local storage berubah
+            window.addEventListener('storage', function (e) {
+                if (e.key === 'qxo_audio_state') {
+                    console.log('Local storage changed:', e.newValue);
                 }
             });
         });
