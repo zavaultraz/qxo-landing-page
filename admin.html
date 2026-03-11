@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QXO Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@200..700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Readex Pro', sans-serif;
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+
+<body class="p-4 md:p-8">
+
+    <div class="max-w-4xl mx-auto bg-white p-6 md:p-8 rounded-xl shadow-lg mb-20">
+        <h1 class="text-3xl font-bold mb-8 text-purple-700 text-center">Dashboard CMS QXO</h1>
+
+        <div id="admin-forms" class="space-y-8">
+            <p class="text-center text-gray-500">Memuat data dari database...</p>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-gray-200">
+            <button id="btn-save"
+                class="w-full bg-purple-600 text-white font-bold py-4 rounded-lg hover:bg-purple-700 transition shadow-lg text-lg">
+                Simpan Semua Perubahan
+            </button>
+            <p id="status-msg" class="text-center text-sm font-bold mt-4 hidden"></p>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+        // MASUKKAN CONFIG FIREBASE KAMU DI SINI
+        const firebaseConfig = {
+            apiKey: "AIzaSyBPTaROKUU8Qbx-f-H1lszUoQIdmkussq4",
+            authDomain: "game-garage-8qj86.firebaseapp.com",
+            projectId: "game-garage-8qj86",
+            databaseUrl: "https://game-garage-8qj86-default-rtdb.asia-southeast1.firebasedatabase.app",
+            storageBucket: "game-garage-8qj86.firebasestorage.app",
+            messagingSenderId: "622612048115",
+            appId: "1:622612048115:web:3a6b6fb67785e43cd16f86"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Data Default (Buat patokan kalau database masih kosong)
+        let siteData = {
+            audioUrl: "ASSET/music/Ariana Grande - bye [Altare Remix].mp3.mp4",
+            hero: {
+                title: "WELCOME TO QXO GENERATIO",
+                desc: "QXO Generatio adalah Family game Hotel Hideaway yang di ketuai oleh Quotehh dan Odette untuk menambah koneksi dan pertemanan.",
+                imgLeft: "ASSET/image/image 3.png",
+                imgRight: "ASSET/image/logo.png"
+            },
+            admins: [
+                { name: "Qyu", role: "(Founder - QXO)", img: "ASSET/image/image 4.png" },
+                { name: "Odet", role: "(CO Founder - QXO)", img: "ASSET/image/image 5.png" },
+                { name: "Aen", role: "(Admin - QXO)", img: "ASSET/image/image 7.png" },
+                { name: "Uci", role: "(Admin - QXO)", img: "ASSET/image/image 8.png" },
+                { name: "Cya", role: "(Admin - QXO)", img: "ASSET/image/image 9.png" },
+                { name: "Dhea", role: "(Admin - QXO)", img: "ASSET/image/image 10.png" },
+                { name: "Bayo", role: "(Admin - QXO)", img: "ASSET/image/image 12.png" },
+                { name: "Dex", role: "(Admin - QXO)", img: "ASSET/image/image 11.png" },
+                { name: "Diya", role: "(Admin - QXO)", img: "ASSET/image/image-ava-2.png" },
+                { name: "Neko", role: "(Admin - QXO)", img: "ASSET/image/image-ava-1.png" }
+            ],
+            fotoBersama: [
+                "ASSET/image/image 13.png", "ASSET/image/image 14.png", "ASSET/image/image 15.png", "ASSET/image/image 16.png", "ASSET/image/image 17.png"
+            ],
+            kartuNama: [
+                "ASSET/image/image 18.png", "ASSET/image/image 19.png", "ASSET/image/image 20.png", "ASSET/image/image 21.png", "ASSET/image/image 22.png",
+                "ASSET/image/image 23.png", "ASSET/image/image 24.png", "ASSET/image/image 25.png", "ASSET/image/image 26.png", "ASSET/image/image 27.png"
+            ]
+        };
+
+        // Render Form Input
+        function renderForms() {
+            const container = document.getElementById('admin-forms');
+            let html = `
+                <div class="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                    <h2 class="font-bold text-lg mb-4">1. Audio & Teks Utama</h2>
+                    <div class="space-y-3">
+                        <div><label class="block text-sm font-semibold">Link Audio Latar (URL)</label><input type="text" id="in-audio" value="${siteData.audioUrl}" class="w-full border p-2 rounded"></div>
+                        <div><label class="block text-sm font-semibold">Judul Web</label><input type="text" id="in-hero-title" value="${siteData.hero.title}" class="w-full border p-2 rounded"></div>
+                        <div><label class="block text-sm font-semibold">Deskripsi</label><textarea id="in-hero-desc" class="w-full border p-2 rounded" rows="3">${siteData.hero.desc}</textarea></div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div><label class="block text-sm font-semibold">Link Logo Kiri (URL)</label><input type="text" id="in-hero-imgL" value="${siteData.hero.imgLeft}" class="w-full border p-2 rounded"></div>
+                            <div><label class="block text-sm font-semibold">Link Logo Kanan (URL)</label><input type="text" id="in-hero-imgR" value="${siteData.hero.imgRight}" class="w-full border p-2 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                    <h2 class="font-bold text-lg mb-4">2. Daftar Pengurus (Admin)</h2>
+                    <div class="space-y-4">
+            `;
+
+            siteData.admins.forEach((admin, i) => {
+                html += `
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-2 border-b border-blue-200 pb-2">
+                        <div><label class="block text-xs text-gray-600">Nama Admin ${i + 1}</label><input type="text" id="in-adm-name-${i}" value="${admin.name}" class="w-full border p-2 rounded text-sm"></div>
+                        <div><label class="block text-xs text-gray-600">Jabatan</label><input type="text" id="in-adm-role-${i}" value="${admin.role}" class="w-full border p-2 rounded text-sm"></div>
+                        <div><label class="block text-xs text-gray-600">Link Foto (URL)</label><input type="text" id="in-adm-img-${i}" value="${admin.img}" class="w-full border p-2 rounded text-sm"></div>
+                    </div>
+                `;
+            });
+
+            html += `</div></div>
+                <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                    <h2 class="font-bold text-lg mb-4">3. Foto Bersama (Isi URL Gambar)</h2>
+                    <div class="space-y-2">
+            `;
+
+            siteData.fotoBersama.forEach((foto, i) => {
+                html += `<div><input type="text" id="in-fb-${i}" value="${foto}" class="w-full border p-2 rounded" placeholder="URL Foto Bersama ${i + 1}"></div>`;
+            });
+
+            html += `</div></div>
+                <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                    <h2 class="font-bold text-lg mb-4">4. Kartu Nama Resmi (Isi URL Gambar)</h2>
+                    <div class="space-y-2">
+            `;
+
+            siteData.kartuNama.forEach((kartu, i) => {
+                html += `<div><input type="text" id="in-kn-${i}" value="${kartu}" class="w-full border p-2 rounded" placeholder="URL Kartu Nama ${i + 1}"></div>`;
+            });
+
+            html += `</div></div>`;
+            container.innerHTML = html;
+        }
+
+        // Ambil data dari DB saat buka admin
+        db.ref('qxoSiteData').once('value', (snapshot) => {
+            if (snapshot.exists()) {
+                siteData = snapshot.val(); // Update siteData dengan yang ada di DB
+            }
+            renderForms();
+        });
+
+        // Simpan Data
+        document.getElementById('btn-save').addEventListener('click', () => {
+            const btn = document.getElementById('btn-save');
+            const status = document.getElementById('status-msg');
+            btn.innerText = "Menyimpan ke Database...";
+
+            // Kumpulkan data baru dari form
+            const newData = {
+                audioUrl: document.getElementById('in-audio').value,
+                hero: {
+                    title: document.getElementById('in-hero-title').value,
+                    desc: document.getElementById('in-hero-desc').value,
+                    imgLeft: document.getElementById('in-hero-imgL').value,
+                    imgRight: document.getElementById('in-hero-imgR').value
+                },
+                admins: [],
+                fotoBersama: [],
+                kartuNama: []
+            };
+
+            for (let i = 0; i < 10; i++) {
+                newData.admins.push({
+                    name: document.getElementById(`in-adm-name-${i}`).value,
+                    role: document.getElementById(`in-adm-role-${i}`).value,
+                    img: document.getElementById(`in-adm-img-${i}`).value
+                });
+            }
+
+            for (let i = 0; i < 5; i++) {
+                newData.fotoBersama.push(document.getElementById(`in-fb-${i}`).value);
+            }
+
+            for (let i = 0; i < 10; i++) {
+                newData.kartuNama.push(document.getElementById(`in-kn-${i}`).value);
+            }
+
+            // Push ke Firebase
+            db.ref('qxoSiteData').set(newData).then(() => {
+                btn.innerText = "Simpan Semua Perubahan";
+                status.innerText = "BERHASIL DISIMPAN! Web Utama otomatis terupdate.";
+                status.className = "text-center text-sm font-bold mt-4 text-green-600 block";
+                setTimeout(() => status.classList.add('hidden'), 4000);
+            }).catch(err => alert("Error: " + err));
+        });
+    </script>
+</body>
+
+</html>
